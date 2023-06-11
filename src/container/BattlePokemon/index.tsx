@@ -36,7 +36,7 @@ const BattlePokemon = ({
 
   const challengerId = useMemo(
     () => searchChallenger(),
-    [pokemon, searchChallenger],
+    [pokemon, searchChallenger]
   );
   const { data: challenger, isFetching } =
     useGetSinglePokemonQuery(challengerId);
@@ -67,13 +67,13 @@ const BattlePokemon = ({
   if (!challenger) return null;
 
   return (
-    <div className="flex flex-col gap-5 w-full max-w-sm min-h-screen py-20">
+    <div className="flex flex-col gap-5 w-full max-w-sm min-h-screen py-20 justify-center">
       <div className="flex items-baseline justify-center gap-10">
         <img
           className={clsx(
-            "-scale-x-100 transform-gpu  rounded-md shadow-sm",
+            "-scale-x-100 transform-gpu",
             battleResult !== undefined && !battleResult.winner && "grayscale",
-            battleLoading && "animate-pulse",
+            battleLoading && "animate-pulse"
           )}
           src={
             pokemon.sprites.versions["generation-v"]["black-white"].animated
@@ -84,9 +84,9 @@ const BattlePokemon = ({
         />
         <img
           className={clsx(
-            " rounded-md shadow-sm",
+            " rounded-md",
             battleResult !== undefined && battleResult.winner && "grayscale",
-            battleLoading && "animate-pulse",
+            battleLoading && "animate-pulse"
           )}
           src={
             challenger.sprites.versions["generation-v"]["black-white"].animated

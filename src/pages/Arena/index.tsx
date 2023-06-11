@@ -71,7 +71,7 @@ const Arena = () => {
                 selected={pokemon.name === selectedPokemon?.name}
                 uri={pokemon.url}
               />
-            )),
+            ))
           )}
         </div>
       )}
