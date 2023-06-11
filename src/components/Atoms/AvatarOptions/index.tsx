@@ -29,11 +29,11 @@ const AvatarOptionSelector = <T,>({
               disabled={disabled}
               onClick={() => setCurrentOption(option)}
               key={`option`}
-              className="h-16 w-16 select-none min-h-fit min-w-fit"
+              className="h-16 w-16 select-none"
             >
               <Svg
                 className={clsx(
-                  "h-16 w-16 rounded-sm object-cover min-w-fit",
+                  "h-16 w-16 rounded-sm object-cover",
                   option === currentOption[0] && "border-2 border-primary",
                   disabled && "grayscale",
                 )}

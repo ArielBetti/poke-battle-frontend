@@ -194,7 +194,7 @@ const CustomAvatar = ({
         <div className="flex items-start justify-between w-full">
           <Svg
             src={avatar().toString()}
-            className="h-24 w-24 rounded-md object-cover min-w-fit"
+            className="h-24 w-24 rounded-md object-cover"
           />
           <button
             className="flex items-center justify-start gap-2 border-b-2 border-b-primary"

@@ -67,7 +67,7 @@ const BattlePokemon = ({
   if (!challenger) return null;
 
   return (
-    <div className="flex flex-col gap-5 w-full max-w-sm">
+    <div className="flex flex-col gap-5 w-full max-w-sm min-h-screen py-20">
       <div className="flex items-baseline justify-center gap-10">
         <img
           className={clsx(

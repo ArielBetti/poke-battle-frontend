@@ -484,4 +484,7 @@ export default defineConfig({
     }),
     VitePWA(manifestForPlugin),
   ],
+	server: {
+    host: true,
+  },
 });
