@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { stringify } from "qs";
 import { createAvatar } from "@dicebear/core";
 import * as style from "@dicebear/adventurer";
 import Svg from "react-inlinesvg";
