@@ -206,7 +206,7 @@ const CustomAvatar = ({
         </div>
         <div
           className={clsx(
-            "transition-all flex flex-col w-full overflow-auto gap-2",
+            "transition-all flex flex-col w-full overflow-auto gap-2 bg-base-200 p-2 rounded-md",
             customToggle ? "h-[50vh]" : "h-0",
           )}
         >
