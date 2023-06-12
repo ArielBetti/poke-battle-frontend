@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
-import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
+import { clsxm } from "../../../utils/clsxm";
 
 // types
 import type { TButton } from "./types";
@@ -13,8 +13,8 @@ const Button = forwardRef<HTMLButtonElement, TButton>(
       <Component
         {...rest}
         ref={ref}
-        className={twMerge(
-          "border-2 border-b-8 border-primary-focus bg-primary text-primary-content flex cursor-pointer items-center justify-center gap-1 rounded-md p-2 shadow-md  transition-colors",
+        className={clsxm(
+          "disabled:opacity-50 disabled:cursor-not-allowed border-2 border-b-8 border-primary-focus bg-primary text-primary-content flex cursor-pointer items-center justify-center gap-1 rounded-md p-2 shadow-md  transition-colors",
           className,
         )}
       >

@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import expressoTSIcon from "../../assets/expressoicon.svg";
 import useCreateUserMutation from "../../queries/useCreateUserMutation";
 import useSignInUserMutation from "../../queries/useSignInUserMutation";
@@ -13,6 +13,9 @@ import { useUser } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { mountAuthRoute } from "../../utils/mountAuthRoute";
 import { ROUTE } from "../../routes";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 
 type TLoginTabs = "login" | "create";
 
@@ -26,10 +29,37 @@ const defaultAvatar: IUserAvatar = {
 };
 
 const Login = () => {
+  const [tab, setTab] = useState<TLoginTabs>("login");
+
+  const loginSchema = z.object({
+    email: z
+      .string()
+      .email({ message: "Invalid email format" })
+      .nonempty({ message: "Email is required" }),
+    name:
+      tab === "login"
+        ? z.string().optional()
+        : z.string().nonempty({ message: "Name is required" }),
+    password: z
+      .string()
+      .nonempty({ message: "Password is required" })
+      .min(tab === "login" ? 0 : 6, {
+        message: "Password required 6 characters minimum",
+      }),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setFocus,
+  } = useForm<TCreateRequest>({
+    criteriaMode: "all",
+    resolver: zodResolver(loginSchema),
+  });
   const navigation = useNavigate();
 
   const user = useUser();
-  const [tab, setTab] = useState<TLoginTabs>("login");
   const [avatar, setAvatar] = useState<IUserAvatar>(defaultAvatar);
   const {
     mutate: createUser,
@@ -45,19 +75,12 @@ const Login = () => {
 
   const actionRef = useRef("");
 
-  function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    const formJson = Object.fromEntries(formData.entries());
-
+  function handleFormSubmit(data: TCreateRequest) {
     if (actionRef.current === "create") {
-      const body = formJson as unknown as TCreateRequest;
-      return createUser({ ...body, avatar });
+      return createUser({ ...data, avatar });
     }
 
-    return signInUser(formJson);
+    return signInUser(data);
   }
 
   useEffect(() => {
@@ -78,7 +101,7 @@ const Login = () => {
               onClick={() => setTab("login")}
               className={twMerge(
                 "tab tab-bordered",
-                tab === "login" && "tab-active",
+                tab === "login" && "tab-active"
               )}
             >
               Login
@@ -87,7 +110,7 @@ const Login = () => {
               onClick={() => setTab("create")}
               className={twMerge(
                 "tab tab-bordered",
-                tab === "create" && "tab-active",
+                tab === "create" && "tab-active"
               )}
             >
               Create
@@ -101,31 +124,34 @@ const Login = () => {
         )}
         <form
           className="w-full max-w-full md:max-w-lg"
-          onSubmit={handleFormSubmit}
+          onSubmit={handleSubmit(handleFormSubmit, (e) => console.log(e))}
         >
           <div className=" gap-7 flex flex-col w-full pt-10">
             {tab === "create" && (
               <Input
-                name="name"
                 classLabel="font-semibold"
                 type="text"
                 label="Name"
+                zodRegister={register("name")}
+                setFocus={() => setFocus("name")}
               />
             )}
             <Input
-              name="email"
               classLabel="font-semibold w-full"
               type="text"
               label="Email"
+              zodRegister={register("email")}
+              setFocus={() => setFocus("email")}
             />
             <Input
               classLabel="font-semibold"
-              name="password"
               type="password"
               label="Password"
+              zodRegister={register("password")}
+              setFocus={() => setFocus("password")}
             />
           </div>
-          <div className="min-h-12 flex items-center justify-center">
+          <div className="min-h-12 flex items-center justify-start py-5">
             <div className="flex flex-col items-start justify-start gap-2">
               {axios.isAxiosError(signInUserError) && (
                 <p className="text-error">
@@ -136,6 +162,14 @@ const Login = () => {
                 <p className="text-error">
                   {createUserError.response?.data?.error}
                 </p>
+              )}
+              {errors && (
+                <>
+                  <p className="text-error">{errors.avatar?.message}</p>
+                  <p className="text-error">{errors.name?.message}</p>
+                  <p className="text-error">{errors.email?.message}</p>
+                  <p className="text-error">{errors.password?.message}</p>
+                </>
               )}
             </div>
             <InlineLoading isLoading={signInUserLoading} text="Carregando..." />
