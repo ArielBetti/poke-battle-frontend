@@ -9,7 +9,10 @@ import { ROUTE } from "../routes";
 // components
 import { Button, Header, ThemeSelector } from "../components";
 import { mountAuthRoute } from "../utils/mountAuthRoute";
-import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftOnRectangleIcon,
+  CubeIcon,
+} from "@heroicons/react/24/outline";
 
 // ::
 const AuthRoute = () => {
@@ -32,7 +35,10 @@ const AuthRoute = () => {
               alt={`custom avatar`}
             />
             <div className="animate-leftSlide flex justify-between items-start flex-col">
-              <p className="font-thin">sign in as</p>
+              <div className="flex items-center justify-start gap-1">
+                <CubeIcon className="h-5 w-5" />
+                <p className="font-semibold">PokeBattle</p>
+              </div>
               <h1 className="font-semibold">{user.name}</h1>
             </div>
           </Link>
