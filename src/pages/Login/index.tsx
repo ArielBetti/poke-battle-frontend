@@ -7,7 +7,7 @@ import axios from "axios";
 import { twMerge } from "tailwind-merge";
 import { IUserAvatar, TCreateRequest } from "../../service/types";
 import CustomAvatar from "../../components/Molecules/CustomAvatar";
-import { CubeIcon } from "@heroicons/react/24/outline";
+import { CodeBracketIcon, CubeIcon, TvIcon } from "@heroicons/react/24/outline";
 import { defaultAvatarEnum } from "../../utils/enums";
 import { useUser } from "../../store";
 import { useNavigate } from "react-router-dom";
@@ -215,6 +215,30 @@ const Login = () => {
           </a>
         </p>
         <ThemeSelector />
+      </div>
+      <div className="flex justify-start items-center gap-2 flex-wrap">
+        <p className="flex gap-2 items-center justify-center bg-secondary text-secondary-content p-2 rounded-md border-4 border-b-8 border-secondary-focus">
+          <CodeBracketIcon className="w-6 h-6" />
+          <a
+            href="https://github.com/ArielBetti/pokebattle-backend"
+            target="_blank"
+            className="flex items-center justify-center font-semibold"
+            rel="noreferrer"
+          >
+            Back-end Source code
+          </a>
+        </p>
+        <p className="flex gap-2 items-center justify-center bg-secondary text-secondary-content p-2 rounded-md border-4 border-b-8 border-secondary-focus">
+          <TvIcon className="w-6 h-6" />
+          <a
+            href="https://github.com/ArielBetti/pokebattle-frontend"
+            target="_blank"
+            className="flex items-center justify-center font-semibold"
+            rel="noreferrer"
+          >
+            Front-end Source code
+          </a>
+        </p>
       </div>
     </div>
   );
